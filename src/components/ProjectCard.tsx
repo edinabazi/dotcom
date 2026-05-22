@@ -1,6 +1,6 @@
 import { motion, useReducedMotion, useSpring } from "motion/react";
 
-interface OpenSourceCardProps {
+interface ProjectCardProps {
   title: string;
   description: string;
   href: string;
@@ -10,7 +10,7 @@ interface OpenSourceCardProps {
   delay?: number;
 }
 
-export default function OpenSourceCard({
+export default function ProjectCard({
   title,
   description,
   href,
@@ -18,7 +18,7 @@ export default function OpenSourceCard({
   coverSrc,
   coverAlt,
   delay = 0,
-}: OpenSourceCardProps) {
+}: ProjectCardProps) {
   const arrowX = useSpring(0, { stiffness: 300, damping: 45, mass: 0.7 });
   const arrowY = useSpring(0, { stiffness: 300, damping: 45, mass: 0.7 });
   const arrowOpacity = useSpring(0.7, {
@@ -67,23 +67,19 @@ export default function OpenSourceCard({
         delay,
         ease: [0.23, 1, 0.32, 1],
       }}
-      className="squircle group block rounded-card border border-border bg-surface hover:brightness-120 p-8 text-white outline-none ring-white/20 focus-visible:ring-2 transition-all duration-300"
+      className="squircle group block rounded-4xl sm:rounded-card border border-border bg-surface hover:brightness-120 p-8 text-white outline-none ring-white/20 focus-visible:ring-2 transition-all duration-300"
     >
       <article className="flex flex-col gap-8">
         <div className="flex items-start gap-4 sm:items-center">
-          <img
-            src={iconSrc}
-            alt=""
-            className="squircle size-16 shrink-0 rounded-avatar"
-          />
+          <img src={iconSrc} alt="" className="squircle size-16 shrink-0" />
 
           <div className="min-w-0 flex-1">
             <div className="flex items-start justify-between gap-5">
               <div>
-                <h3 className="text-2xl tracking-[-0.04em] text-white">
+                <h3 className="text-xl sm:text-2xl tracking-[-0.04em] text-white">
                   {title}
                 </h3>
-                <p className="text-base leading-tight tracking-[-0.04em] text-muted">
+                <p className="text-sm sm:text-base leading-tight tracking-[-0.04em] text-muted">
                   {description}
                 </p>
               </div>
@@ -106,12 +102,8 @@ export default function OpenSourceCard({
           </div>
         </div>
 
-        <div className="squircle overflow-hidden rounded-cover">
-          <img
-            src={coverSrc}
-            alt={coverAlt}
-            className="aspect-[1257/600] w-full object-cover"
-          />
+        <div className="squircle overflow-hidden rounded-3xl sm:rounded-cover">
+          <img src={coverSrc} alt={coverAlt} className="w-full object-cover" />
         </div>
       </article>
     </motion.a>

@@ -1,10 +1,11 @@
 ---
 import FadeIn from "../components/FadeIn";
-import OpenSourceCard from "../components/OpenSourceCard";
+import ProjectCard from "../components/ProjectCard";
 import SiteHeader from "../components/SiteHeader.astro";
+import SocialLinks from "../components/SocialLinks.astro";
 import Layout from "../layouts/Layout.astro";
 
-const openSourceProjects = [
+const projects = [
     {
         title: "Playhead",
         description: "A beautiful, waveform-based, local music player.",
@@ -30,16 +31,18 @@ const openSourceProjects = [
     description="Edin Abazi is a design engineer and founder building brands, websites, apps, and software with a strong point of view on taste, craft, and shipping."
     shortDescription="Design engineer, founder, and product builder working across design, code, branding, software, and open source."
 >
-    <main class="min-h-screen bg-black px-6 py-20 text-white sm:px-8">
+    <main class="min-h-screen bg-black px-6 py-8 sm:py-20 text-white sm:px-8">
         <div
-            class="mx-auto flex w-full max-w-container flex-col gap-20 overflow-hidden"
+            class="mx-auto flex w-full max-w-container flex-col gap-12 sm:gap-20 overflow-hidden"
         >
             <FadeIn client:load>
                 <SiteHeader />
             </FadeIn>
 
-            <FadeIn client:load delay={0.08} className="flex flex-col gap-10">
-                <h1 class="text-5xl leading-none tracking-tighter text-white">
+            <FadeIn client:load delay={0.08} className="flex flex-col gap-8">
+                <h1
+                    class="text-4xl sm:text-5xl leading-none tracking-tighter text-white"
+                >
                     Taste matters,<br />now more than ever.
                 </h1>
 
@@ -68,14 +71,21 @@ const openSourceProjects = [
                         websites, apps, tools, and systems across more
                         industries than I can count.
                     </p>
-                    <p>I love this shit, and I want more.</p>
+                    <p>
+                        I <span class="font-thicc">love</span> this shit, and I want
+                        more.
+                    </p>
                 </div>
             </FadeIn>
 
-            <section class="flex flex-col gap-10">
-                <FadeIn client:load delay={0.16} className="flex flex-col gap-7">
+            <section class="flex flex-col gap-8">
+                <FadeIn
+                    client:load
+                    delay={0.16}
+                    className="flex flex-col gap-8"
+                >
                     <h2
-                        class="text-5xl leading-none tracking-[-0.04em] text-white"
+                        class="text-4xl sm:text-5xl leading-none tracking-[-0.04em] text-white"
                     >
                         Open source work
                     </h2>
@@ -95,8 +105,8 @@ const openSourceProjects = [
 
                 <div class="flex flex-col gap-8">
                     {
-                        openSourceProjects.map((project, index) => (
-                            <OpenSourceCard
+                        projects.map((project, index) => (
+                            <ProjectCard
                                 client:load
                                 delay={0.24 + index * 0.08}
                                 {...project}
@@ -105,6 +115,10 @@ const openSourceProjects = [
                     }
                 </div>
             </section>
+
+            <footer class="flex sm:hidden">
+                <SocialLinks />
+            </footer>
         </div>
     </main>
 </Layout>

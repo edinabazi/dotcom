@@ -28,6 +28,15 @@ export default {
         const url = new URL(request.url);
 
         if (
+            url.hostname === "www.edinabazi.com" ||
+            url.protocol !== "https:"
+        ) {
+            url.hostname = "edinabazi.com";
+            url.protocol = "https:";
+            return Response.redirect(url.toString(), 301);
+        }
+
+        if (
             url.pathname === "/js/script.js" &&
             (request.method === "GET" || request.method === "HEAD")
         ) {
