@@ -9,3 +9,11 @@ import Layout from "../layouts/Layout.astro";
 >
 	<AsciiShaderPlayground client:load />
 </Layout>
+
+<script>
+	import { trackEvent } from "../lib/analytics";
+
+	trackEvent("shader_opened", {
+		source: document.referrer || "direct",
+	});
+</script>

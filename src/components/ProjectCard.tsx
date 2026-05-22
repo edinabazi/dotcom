@@ -1,4 +1,5 @@
 import { motion, useReducedMotion, useSpring } from "motion/react";
+import { trackEvent } from "../lib/analytics";
 import { fadeInAnimate, fadeInInitial, fadeInTransition } from "./motionConfig";
 
 interface ProjectCardProps {
@@ -8,6 +9,7 @@ interface ProjectCardProps {
   iconSrc: string;
   coverSrc: string;
   coverAlt: string;
+  projectType: "studio" | "open_source";
   delay?: number;
 }
 
@@ -18,6 +20,7 @@ export default function ProjectCard({
   iconSrc,
   coverSrc,
   coverAlt,
+  projectType,
   delay = 0,
 }: ProjectCardProps) {
   const arrowX = useSpring(0, { stiffness: 300, damping: 45, mass: 0.7 });
@@ -49,12 +52,21 @@ export default function ProjectCard({
     }, 140);
   }
 
+  function trackProjectClick() {
+    trackEvent("project_clicked", {
+      project_name: title,
+      project_type: projectType,
+      url: href,
+    });
+  }
+
   return (
     <motion.a
       href={href}
       target="_blank"
       rel="noreferrer"
       aria-label={`Visit ${title}`}
+      onClick={trackProjectClick}
       onMouseEnter={animateArrow}
       onFocus={animateArrow}
       initial={

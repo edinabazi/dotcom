@@ -80,6 +80,14 @@ const personSchema = {
 			data-domain="edinabazi.com"
 			src="/js/script.js"
 		></script>
+		<script>
+			import posthog from "posthog-js";
+
+			posthog.init("phc_CvwbMaumpMViYvABTtpKwcNMfjwRx2EhwC6oiC9vLK4f", {
+				api_host: "https://f.edinabazi.com",
+				defaults: "2026-01-30",
+			});
+		</script>
 		<title>{title}</title>
 		<Font cssVariable="--font-marund" preload />
 	</head>

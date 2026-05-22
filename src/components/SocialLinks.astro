@@ -6,9 +6,11 @@ import LinkedInIcon from "./icons/LinkedInIcon.astro";
 
 interface Props {
     class?: string;
+    location?: "header" | "footer";
 }
 
 const className = Astro.props.class ?? "";
+const location = Astro.props.location ?? "header";
 ---
 
 <nav aria-label="Social links" class={`flex items-center gap-6 ${className}`}>
@@ -18,6 +20,9 @@ const className = Astro.props.class ?? "";
         rel="noreferrer"
         aria-label="LinkedIn"
         class="text-white transition-opacity hover:opacity-70"
+        data-track-social-link
+        data-platform="linkedin"
+        data-location={location}
     >
         <LinkedInIcon class="fill-current" />
     </a>
@@ -27,6 +32,9 @@ const className = Astro.props.class ?? "";
         rel="noreferrer"
         aria-label="GitHub"
         class="text-white transition-opacity hover:opacity-70"
+        data-track-social-link
+        data-platform="github"
+        data-location={location}
     >
         <GitHubIcon class="fill-current" />
     </a>
@@ -34,6 +42,10 @@ const className = Astro.props.class ?? "";
         href="mailto:hello@edinabazi.com"
         aria-label="Email"
         class="text-white transition-opacity hover:opacity-70"
+        data-track-social-link
+        data-track-email-link
+        data-platform="email"
+        data-location={location}
     >
         <AtSign size={20} strokeWidth={2.5} aria-hidden="true" />
     </a>
@@ -43,7 +55,34 @@ const className = Astro.props.class ?? "";
         rel="noreferrer"
         aria-label="Last.fm"
         class="text-white transition-opacity hover:opacity-70"
+        data-track-social-link
+        data-platform="lastfm"
+        data-location={location}
     >
         <LastFmIcon class="fill-current" />
     </a>
 </nav>
+
+<script>
+    import { trackEvent } from "../lib/analytics";
+
+    document.querySelectorAll("[data-track-social-link]").forEach((link) => {
+        link.addEventListener("click", () => {
+            if (!(link instanceof HTMLElement)) return;
+
+            const platform = link.dataset.platform;
+            const location = link.dataset.location;
+
+            trackEvent("social_link_clicked", {
+                platform,
+                location,
+            });
+
+            if (link.hasAttribute("data-track-email-link")) {
+                trackEvent("email_clicked", {
+                    location,
+                });
+            }
+        });
+    });
+</script>
