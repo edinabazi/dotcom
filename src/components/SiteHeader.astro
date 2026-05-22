@@ -1,0 +1,51 @@
+---
+import { AtSign } from "@lucide/astro";
+import LastFmIcon from "./icons/LastFmIcon.astro";
+import LinkedInIcon from "./icons/LinkedInIcon.astro";
+---
+
+<header
+	class="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center sm:gap-4"
+>
+	<div class="flex min-w-0 flex-1 items-center gap-4">
+		<img
+			src="/assets/avatar.jpg"
+			alt="Edin Abazi"
+			class="squircle size-16 shrink-0 rounded-avatar object-cover"
+		/>
+		<div class="flex min-w-0 flex-col gap-0">
+			<p class="text-2xl tracking-[-0.04em] text-white">Edin Abazi</p>
+			<p class="-mt-0.5 text-base leading-tight tracking-[-0.04em] text-muted">
+				Design engineer, founder & all-arounder
+			</p>
+		</div>
+	</div>
+
+	<nav aria-label="Social links" class="flex items-center gap-5">
+		<a
+			href="https://linkedin.com/in/edinabazi"
+			target="_blank"
+			rel="noreferrer"
+			aria-label="LinkedIn"
+			class="text-white transition-opacity hover:opacity-70"
+		>
+			<LinkedInIcon class="fill-current" />
+		</a>
+		<a
+			href="mailto:hello@edinabazi.com"
+			aria-label="Email"
+			class="text-white transition-opacity hover:opacity-70"
+		>
+			<AtSign size={21} strokeWidth={2.5} aria-hidden="true" />
+		</a>
+		<a
+			href="https://www.last.fm/user/edinabazi"
+			target="_blank"
+			rel="noreferrer"
+			aria-label="Last.fm"
+			class="text-white transition-opacity hover:opacity-70"
+		>
+			<LastFmIcon class="fill-current" />
+		</a>
+	</nav>
+</header>

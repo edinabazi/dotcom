@@ -1,17 +1,103 @@
 ---
+import OpenSourceCard from "../components/OpenSourceCard";
+import SiteHeader from "../components/SiteHeader.astro";
+import Layout from "../layouts/Layout.astro";
 
+const openSourceProjects = [
+    {
+        title: "Playhead",
+        description: "A beautiful, waveform-based, local music player.",
+        href: "https://playheadapp.com/",
+        iconSrc: "/assets/playhead-icon.png",
+        coverSrc: "/assets/playhead-cover.png",
+        coverAlt: "Playhead app screenshot",
+    },
+    {
+        title: "Kompakt",
+        description:
+            "A beautiful, minimal native image & video compression app.",
+        href: "https://kompaktapp.com/",
+        iconSrc: "/assets/kompakt-icon.png",
+        coverSrc: "/assets/kompakt-cover.png",
+        coverAlt: "Kompakt app screenshot",
+    },
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout
+    title="Edin Abazi - Design Engineer, Founder & Product Builder"
+    description="Edin Abazi is a design engineer and founder building brands, websites, apps, and software with a strong point of view on taste, craft, and shipping."
+    shortDescription="Design engineer, founder, and product builder working across design, code, branding, software, and open source."
+>
+    <main class="min-h-screen bg-black px-6 py-20 text-white sm:px-8">
+        <div
+            class="mx-auto flex w-full max-w-container flex-col gap-20 overflow-hidden"
+        >
+            <SiteHeader />
+
+            <section class="flex flex-col gap-10">
+                <h1 class="text-5xl leading-none tracking-tighter text-white">
+                    Taste matters,<br />now more than ever.
+                </h1>
+
+                <div
+                    class="flex flex-col gap-5 text-lg leading-[1.45] tracking-[-0.04em] text-muted"
+                >
+                    <p>
+                        “Design engineer” is the closest existing label for what
+                        I do, but it still feels too narrow.
+                    </p>
+                    <p>
+                        I sit somewhere between design, code, product, and most
+                        importantly: <span class="font-thicc">taste</span>. <br
+                            class="hidden sm:inline"
+                        />I care deeply about how software looks, feels,
+                        behaves, performs, and ships.
+                    </p>
+                    <p>
+                        I get involved early: from the tech stack and product
+                        direction, to every pixel, interaction, animation,
+                        deployment, and tiny detail that makes the whole thing
+                        feel right.
+                    </p>
+                    <p>
+                        Over the past 12+ years, I’ve helped create brands,
+                        websites, apps, tools, and systems across more
+                        industries than I can count.
+                    </p>
+                    <p>I love this shit, and I want more.</p>
+                </div>
+            </section>
+
+            <section class="flex flex-col gap-10">
+                <div class="flex flex-col gap-7">
+                    <h2
+                        class="text-5xl leading-none tracking-[-0.04em] text-white"
+                    >
+                        Open source work
+                    </h2>
+                    <div
+                        class="flex flex-col gap-5 text-lg leading-[1.45] tracking-[-0.04em] text-muted"
+                    >
+                        <p>
+                            Most of what I know came from people sharing their
+                            work freely. This is my attempt to do the same.
+                        </p>
+                        <p>
+                            Every project listed here is fully branded,
+                            designed, developed, and maintained solely by me.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-8">
+                    {
+                        openSourceProjects.map((project) => (
+                            <OpenSourceCard client:load {...project} />
+                        ))
+                    }
+                </div>
+            </section>
+        </div>
+    </main>
+</Layout>

@@ -1,0 +1,46 @@
+@import "tailwindcss";
+
+:root {
+    --black: #1a1a1a;
+    --white: #efefef;
+    --muted: #b0b0b0;
+    --border: #333333;
+    --surface: rgb(255 255 255 / 0.02);
+}
+
+@theme inline {
+    --font-sans: var(--font-marund), sans-serif;
+    --color-black: var(--black);
+    --color-white: var(--white);
+    --color-muted: var(--muted);
+    --color-border: var(--border);
+    --color-surface: var(--surface);
+    --spacing-container: 37.5rem;
+    --radius-avatar: 4rem;
+    --radius-cover: 2.5rem;
+    --radius-card: 4rem;
+}
+
+@utility font-corner {
+    font-weight: 450;
+    font-variation-settings:
+        "wght" 450,
+        "RND3" 100;
+}
+
+@utility font-thicc {
+    font-weight: 600;
+    font-variation-settings:
+        "wght" 600,
+        "RND3" 100;
+}
+
+@utility squircle {
+    corner-shape: squircle;
+}
+
+@layer base {
+    body {
+        @apply bg-black text-white antialiased font-corner;
+    }
+}

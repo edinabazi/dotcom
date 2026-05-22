@@ -1,0 +1,19 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "edinabazi-datafast-proxy",
+  "main": "workers/datafast-proxy.ts",
+  "compatibility_date": "2026-05-22",
+  "observability": {
+    "enabled": true
+  },
+  "routes": [
+    {
+      "pattern": "edinabazi.com/js/script.js",
+      "custom_domain": false
+    },
+    {
+      "pattern": "edinabazi.com/api/events",
+      "custom_domain": false
+    }
+  ]
+}
