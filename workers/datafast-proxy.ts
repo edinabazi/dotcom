@@ -1,6 +1,10 @@
 const DATAFAST_SCRIPT_URL = "https://datafa.st/js/script.js";
 const DATAFAST_EVENTS_URL = "https://datafa.st/api/events";
 
+interface Env {
+    ASSETS: Fetcher;
+}
+
 function getClientIp(request: Request) {
     return (
         request.headers.get("x-real-ip") ||
@@ -20,10 +24,13 @@ function jsonResponse(message: string, status = 404) {
 }
 
 export default {
-    async fetch(request) {
+    async fetch(request, env) {
         const url = new URL(request.url);
 
-        if (url.pathname === "/js/script.js" && request.method === "GET") {
+        if (
+            url.pathname === "/js/script.js" &&
+            (request.method === "GET" || request.method === "HEAD")
+        ) {
             const response = await fetch(DATAFAST_SCRIPT_URL, {
                 cf: {
                     cacheEverything: true,
@@ -31,7 +38,7 @@ export default {
                 },
             });
 
-            return new Response(response.body, {
+            return new Response(request.method === "HEAD" ? null : response.body, {
                 status: response.status,
                 headers: {
                     "Content-Type": "application/javascript; charset=utf-8",
@@ -64,6 +71,6 @@ export default {
             });
         }
 
-        return jsonResponse("Not found");
+        return env.ASSETS.fetch(request);
     },
-} satisfies ExportedHandler;
+} satisfies ExportedHandler<Env>;
