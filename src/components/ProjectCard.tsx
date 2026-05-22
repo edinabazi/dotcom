@@ -1,4 +1,5 @@
 import { motion, useReducedMotion, useSpring } from "motion/react";
+import { fadeInAnimate, fadeInInitial, fadeInTransition } from "./motionConfig";
 
 interface ProjectCardProps {
   title: string;
@@ -59,13 +60,12 @@ export default function ProjectCard({
       initial={
         reduceMotion
           ? { opacity: 1 }
-          : { opacity: 0, transform: "translate3d(0, 8px, 0)" }
+          : fadeInInitial
       }
-      animate={{ opacity: 1, transform: "translate3d(0, 0, 0)" }}
+      animate={fadeInAnimate}
       transition={{
-        duration: 0.55,
+        ...fadeInTransition,
         delay,
-        ease: [0.23, 1, 0.32, 1],
       }}
       className="squircle group block rounded-4xl sm:rounded-card border border-border bg-surface hover:brightness-120 p-6 sm:p-8 text-white outline-none ring-white/20 focus-visible:ring-2 transition-all duration-300"
     >

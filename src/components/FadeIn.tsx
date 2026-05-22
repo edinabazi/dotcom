@@ -1,5 +1,6 @@
 import { motion, useReducedMotion } from "motion/react";
 import type { ReactNode } from "react";
+import { fadeInAnimate, fadeInInitial, fadeInTransition } from "./motionConfig";
 
 interface FadeInProps {
   children: ReactNode;
@@ -20,21 +21,12 @@ export default function FadeIn({
       initial={
         reduceMotion
           ? { opacity: 1 }
-          : {
-              opacity: 0,
-              transform: "translate3d(0, 8px, 0)",
-              filter: "blur(4px)",
-            }
+          : fadeInInitial
       }
-      animate={{
-        opacity: 1,
-        transform: "translate3d(0, 0, 0)",
-        filter: "blur(0px)",
-      }}
+      animate={fadeInAnimate}
       transition={{
-        duration: 1.5,
+        ...fadeInTransition,
         delay,
-        ease: [0.23, 1, 0.32, 1],
       }}
     >
       {children}

@@ -1,5 +1,6 @@
 ---
 import { AtSign } from "@lucide/astro";
+import GitHubIcon from "./icons/GitHubIcon.astro";
 import LastFmIcon from "./icons/LastFmIcon.astro";
 import LinkedInIcon from "./icons/LinkedInIcon.astro";
 
@@ -19,6 +20,15 @@ const className = Astro.props.class ?? "";
         class="text-white transition-opacity hover:opacity-70"
     >
         <LinkedInIcon class="fill-current" />
+    </a>
+    <a
+        href="https://github.com/edinabazi"
+        target="_blank"
+        rel="noreferrer"
+        aria-label="GitHub"
+        class="text-white transition-opacity hover:opacity-70"
+    >
+        <GitHubIcon class="fill-current" />
     </a>
     <a
         href="mailto:hello@edinabazi.com"
