@@ -1,5 +1,6 @@
 ---
 import FadeIn from "../components/FadeIn";
+import Highlight from "../components/Highlight";
 import ProjectCard from "../components/ProjectCard";
 import SiteHeader from "../components/SiteHeader.astro";
 import SocialLinks from "../components/SocialLinks.astro";
@@ -22,6 +23,17 @@ const projects = [
         iconSrc: "/assets/kompakt-icon.png",
         coverSrc: "/assets/kompakt-cover.png",
         coverAlt: "Kompakt app screenshot",
+    },
+];
+
+const workProjects = [
+    {
+        title: "Raze",
+        description: "A premium design and dev partner for startup founders.",
+        href: "https://razegrowth.com/",
+        iconSrc: "/assets/raze-icon.png",
+        coverSrc: "/assets/raze-cover.png",
+        coverAlt: "Raze website preview",
     },
 ];
 ---
@@ -55,10 +67,10 @@ const projects = [
                     </p>
                     <p>
                         I sit somewhere between design, code, product, and most
-                        importantly: <span class="font-thicc">taste</span>. <br
-                            class="hidden sm:inline"
-                        />I care deeply about how software looks, feels,
-                        behaves, performs, and ships.
+                        importantly: <Highlight client:load delay={0.95}
+                            >taste</Highlight
+                        >. <br class="hidden sm:inline" />I care deeply about how
+                        software looks, feels, behaves, performs, and ships.
                     </p>
                     <p>
                         I get involved early: from the tech stack and product
@@ -72,8 +84,8 @@ const projects = [
                         industries than I can count.
                     </p>
                     <p>
-                        I <span class="font-thicc">love</span> this shit, and I want
-                        more.
+                        I <Highlight client:load delay={1.45}>love</Highlight> this
+                        shit, and I want more.
                     </p>
                 </div>
             </FadeIn>
@@ -82,6 +94,46 @@ const projects = [
                 <FadeIn
                     client:load
                     delay={0.16}
+                    className="flex flex-col gap-8"
+                >
+                    <h2
+                        class="text-4xl sm:text-5xl leading-none tracking-[-0.04em] text-white"
+                    >
+                        Studio work
+                    </h2>
+                    <div
+                        class="flex flex-col gap-5 text-lg leading-[1.45] tracking-[-0.04em] text-muted"
+                    >
+                        <p>
+                            I co-founded Raze to work closer to the full arc of
+                            building: positioning, brand, website, product,
+                            growth, and the engineering needed to make it all
+                            real.
+                        </p>
+                        <p>
+                            The work sits somewhere between strategy and
+                            execution, which is exactly where I like to be.
+                        </p>
+                    </div>
+                </FadeIn>
+
+                <div class="flex flex-col gap-8">
+                    {
+                        workProjects.map((project, index) => (
+                            <ProjectCard
+                                client:load
+                                delay={0.24 + index * 0.08}
+                                {...project}
+                            />
+                        ))
+                    }
+                </div>
+            </section>
+
+            <section class="flex flex-col gap-8">
+                <FadeIn
+                    client:load
+                    delay={0.28}
                     className="flex flex-col gap-8"
                 >
                     <h2
@@ -108,7 +160,7 @@ const projects = [
                         projects.map((project, index) => (
                             <ProjectCard
                                 client:load
-                                delay={0.24 + index * 0.08}
+                                delay={0.36 + index * 0.08}
                                 {...project}
                             />
                         ))
@@ -116,7 +168,7 @@ const projects = [
                 </div>
             </section>
 
-            <footer class="flex sm:hidden">
+            <footer class="flex justify-center pb-8 sm:hidden">
                 <SocialLinks />
             </footer>
         </div>

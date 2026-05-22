@@ -67,11 +67,15 @@ export default function ProjectCard({
         delay,
         ease: [0.23, 1, 0.32, 1],
       }}
-      className="squircle group block rounded-4xl sm:rounded-card border border-border bg-surface hover:brightness-120 p-8 text-white outline-none ring-white/20 focus-visible:ring-2 transition-all duration-300"
+      className="squircle group block rounded-4xl sm:rounded-card border border-border bg-surface hover:brightness-120 p-6 sm:p-8 text-white outline-none ring-white/20 focus-visible:ring-2 transition-all duration-300"
     >
-      <article className="flex flex-col gap-8">
+      <article className="flex flex-col gap-6 sm:gap-8">
         <div className="flex items-start gap-4 sm:items-center">
-          <img src={iconSrc} alt="" className="squircle size-16 shrink-0" />
+          <img
+            src={iconSrc}
+            alt=""
+            className="squircle size-16 shrink-0 rounded-2xl sm:rounded-avatar"
+          />
 
           <div className="min-w-0 flex-1">
             <div className="flex items-start justify-between gap-5">
@@ -103,7 +107,11 @@ export default function ProjectCard({
         </div>
 
         <div className="squircle overflow-hidden rounded-3xl sm:rounded-cover">
-          <img src={coverSrc} alt={coverAlt} className="w-full object-cover" />
+          <img
+            src={coverSrc}
+            alt={coverAlt}
+            className="w-full object-cover aspect-2/1"
+          />
         </div>
       </article>
     </motion.a>
