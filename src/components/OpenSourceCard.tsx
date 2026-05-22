@@ -7,6 +7,7 @@ interface OpenSourceCardProps {
   iconSrc: string;
   coverSrc: string;
   coverAlt: string;
+  delay?: number;
 }
 
 export default function OpenSourceCard({
@@ -16,6 +17,7 @@ export default function OpenSourceCard({
   iconSrc,
   coverSrc,
   coverAlt,
+  delay = 0,
 }: OpenSourceCardProps) {
   const arrowX = useSpring(0, { stiffness: 300, damping: 45, mass: 0.7 });
   const arrowY = useSpring(0, { stiffness: 300, damping: 45, mass: 0.7 });
@@ -47,13 +49,24 @@ export default function OpenSourceCard({
   }
 
   return (
-    <a
+    <motion.a
       href={href}
       target="_blank"
       rel="noreferrer"
       aria-label={`Visit ${title}`}
       onMouseEnter={animateArrow}
       onFocus={animateArrow}
+      initial={
+        reduceMotion
+          ? { opacity: 1 }
+          : { opacity: 0, transform: "translate3d(0, 8px, 0)" }
+      }
+      animate={{ opacity: 1, transform: "translate3d(0, 0, 0)" }}
+      transition={{
+        duration: 0.55,
+        delay,
+        ease: [0.23, 1, 0.32, 1],
+      }}
       className="squircle group block rounded-card border border-border bg-surface hover:brightness-120 p-8 text-white outline-none ring-white/20 focus-visible:ring-2 transition-all duration-300"
     >
       <article className="flex flex-col gap-8">
@@ -101,6 +114,6 @@ export default function OpenSourceCard({
           />
         </div>
       </article>
-    </a>
+    </motion.a>
   );
 }
