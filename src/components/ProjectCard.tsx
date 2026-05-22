@@ -107,11 +107,7 @@ export default function ProjectCard({
         </div>
 
         <div className="squircle overflow-hidden rounded-3xl sm:rounded-cover">
-          <img
-            src={coverSrc}
-            alt={coverAlt}
-            className="w-full object-cover aspect-2/1"
-          />
+          <img src={coverSrc} alt={coverAlt} className="w-full object-cover" />
         </div>
       </article>
     </motion.a>

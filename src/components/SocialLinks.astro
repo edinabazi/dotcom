@@ -4,36 +4,36 @@ import LastFmIcon from "./icons/LastFmIcon.astro";
 import LinkedInIcon from "./icons/LinkedInIcon.astro";
 
 interface Props {
-	class?: string;
+    class?: string;
 }
 
 const className = Astro.props.class ?? "";
 ---
 
-<nav aria-label="Social links" class={`flex items-center gap-5 ${className}`}>
-	<a
-		href="https://linkedin.com/in/edinabazi"
-		target="_blank"
-		rel="noreferrer"
-		aria-label="LinkedIn"
-		class="text-white transition-opacity hover:opacity-70"
-	>
-		<LinkedInIcon class="fill-current" />
-	</a>
-	<a
-		href="mailto:hello@edinabazi.com"
-		aria-label="Email"
-		class="text-white transition-opacity hover:opacity-70"
-	>
-		<AtSign size={21} strokeWidth={2.5} aria-hidden="true" />
-	</a>
-	<a
-		href="https://www.last.fm/user/edinabazi"
-		target="_blank"
-		rel="noreferrer"
-		aria-label="Last.fm"
-		class="text-white transition-opacity hover:opacity-70"
-	>
-		<LastFmIcon class="fill-current" />
-	</a>
+<nav aria-label="Social links" class={`flex items-center gap-6 ${className}`}>
+    <a
+        href="https://linkedin.com/in/edinabazi"
+        target="_blank"
+        rel="noreferrer"
+        aria-label="LinkedIn"
+        class="text-white transition-opacity hover:opacity-70"
+    >
+        <LinkedInIcon class="fill-current" />
+    </a>
+    <a
+        href="mailto:hello@edinabazi.com"
+        aria-label="Email"
+        class="text-white transition-opacity hover:opacity-70"
+    >
+        <AtSign size={20} strokeWidth={2.5} aria-hidden="true" />
+    </a>
+    <a
+        href="https://www.last.fm/user/edinabazi"
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Last.fm"
+        class="text-white transition-opacity hover:opacity-70"
+    >
+        <LastFmIcon class="fill-current" />
+    </a>
 </nav>

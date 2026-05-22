@@ -649,11 +649,6 @@ export default function AsciiShaderPlayground() {
 					{settings.renderer === "shader" && (
 						<ShaderPreview settings={settings} className="absolute inset-0 size-full" />
 					)}
-					<div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-6">
-						<p className="max-w-xl text-lg leading-[1.35] tracking-[-0.04em] text-white">
-							Tweak the signal, save the preset, and hand me the JSON when you want it reused on the main site.
-						</p>
-					</div>
 				</div>
 			</section>
 

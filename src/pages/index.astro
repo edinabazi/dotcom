@@ -45,7 +45,7 @@ const workProjects = [
 >
     <main class="min-h-screen bg-black px-6 py-8 sm:py-20 text-white sm:px-8">
         <div
-            class="mx-auto flex w-full max-w-container flex-col gap-12 sm:gap-20 overflow-hidden"
+            class="mx-auto flex w-full max-w-container flex-col gap-12 sm:gap-20"
         >
             <FadeIn client:load>
                 <SiteHeader />
@@ -53,7 +53,7 @@ const workProjects = [
 
             <FadeIn client:load delay={0.08} className="flex flex-col gap-8">
                 <h1
-                    class="text-4xl sm:text-5xl leading-none tracking-tighter text-white"
+                    class="text-4xl sm:text-5xl leading-none sm:leading-[0.96] tracking-tighter text-white"
                 >
                     Taste matters,<br />now more than ever.
                 </h1>
@@ -62,15 +62,15 @@ const workProjects = [
                     class="flex flex-col gap-5 text-lg leading-[1.45] tracking-[-0.04em] text-muted"
                 >
                     <p>
-                        “Design engineer” is the closest existing label for what
-                        I do, but it still feels too narrow.
+                        “Design engineer” is the closest label for what I do,
+                        but it feels too narrow.
                     </p>
                     <p>
                         I sit somewhere between design, code, product, and most
-                        importantly: <Highlight client:load delay={0.95}
+                        importantly <Highlight client:load delay={1.2}
                             >taste</Highlight
-                        >. <br class="hidden sm:inline" />I care deeply about how
-                        software looks, feels, behaves, performs, and ships.
+                        >. <br class="hidden sm:inline" />I care deeply about
+                        how software looks, feels, behaves, performs, and ships.
                     </p>
                     <p>
                         I get involved early: from the tech stack and product
@@ -84,7 +84,7 @@ const workProjects = [
                         industries than I can count.
                     </p>
                     <p>
-                        I <Highlight client:load delay={1.45}>love</Highlight> this
+                        I <Highlight client:load delay={2.5}>love</Highlight> this
                         shit, and I want more.
                     </p>
                 </div>
@@ -109,10 +109,6 @@ const workProjects = [
                             building: positioning, brand, website, product,
                             growth, and the engineering needed to make it all
                             real.
-                        </p>
-                        <p>
-                            The work sits somewhere between strategy and
-                            execution, which is exactly where I like to be.
                         </p>
                     </div>
                 </FadeIn>
@@ -145,8 +141,10 @@ const workProjects = [
                         class="flex flex-col gap-5 text-lg leading-[1.45] tracking-[-0.04em] text-muted"
                     >
                         <p>
-                            Most of what I know came from people sharing their
-                            work freely. This is my attempt to do the same.
+                            Most of what I know came from the open source
+                            community. <br class="hidden sm:inline" />I'm
+                            forever grateful to the community, and this is my
+                            way of giving back.
                         </p>
                         <p>
                             Every project listed here is fully branded,
