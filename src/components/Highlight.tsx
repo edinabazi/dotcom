@@ -22,9 +22,11 @@ export default function Highlight({ children, delay = 0 }: HighlightProps) {
                 }
                 animate={{ clipPath: "inset(0 0 0 0)" }}
                 transition={{
-                    duration: 0.72,
                     delay,
-                    ease: [0.77, 0, 0.175, 1],
+                    type: "spring",
+                    stiffness: 200,
+                    damping: 25,
+                    mass: 1,
                 }}
             />
         </span>
