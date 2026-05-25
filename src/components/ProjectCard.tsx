@@ -88,7 +88,7 @@ export default function ProjectCard({
         ...fadeInTransition,
         delay,
       }}
-      className="project-card squircle group block rounded-4xl sm:rounded-card border border-border bg-surface p-6 sm:p-8 text-white outline-none ring-white/20 focus-visible:ring-2 transition-all duration-300"
+      className="project-card squircle group block rounded-4xl sm:rounded-card border border-border bg-surface p-6 sm:p-8 text-white outline-none ring-white/20 focus-visible:ring-2 transition-all duration-300 [@media(prefers-color-scheme:light)_and_(hover:hover)_and_(pointer:fine)]:hover:border-[#b0b0b0]"
     >
       <article className="flex flex-col gap-6 sm:gap-8">
         <div className="flex items-start gap-4 sm:items-center">
@@ -111,7 +111,7 @@ export default function ProjectCard({
 
               <span
                 aria-hidden="true"
-                className="relative mt-1 grid size-8 shrink-0 place-items-center overflow-hidden rounded-full border border-white/10 text-lg leading-none text-white/70 opacity-70"
+                className="relative mt-1 grid size-8 shrink-0 place-items-center overflow-hidden rounded-full border border-white/10 text-lg leading-none text-white/70 opacity-70 transition-colors duration-300 [@media(prefers-color-scheme:light)_and_(hover:hover)_and_(pointer:fine)]:group-hover:border-[#b0b0b0]"
               >
                 <motion.span
                   style={{

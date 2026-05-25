@@ -6,7 +6,19 @@
     --muted: #b0b0b0;
     --border: #333333;
     --surface: rgb(255 255 255 / 0.02);
+    color-scheme: dark;
     font-size: 14px;
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --black: #efefef;
+        --white: #1a1a1a;
+        --muted: #555555;
+        --border: #d0d0d0;
+        --surface: rgb(0 0 0 / 0.02);
+        color-scheme: light;
+    }
 }
 
 @media (width >= 40rem) {
@@ -68,7 +80,7 @@
     pointer-events: none;
 }
 
-@media (hover: hover) and (pointer: fine) {
+@media (prefers-color-scheme: dark) and (hover: hover) and (pointer: fine) {
     .project-card:hover {
         --project-card-brightness: 1.2;
     }
