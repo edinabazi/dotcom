@@ -67,3 +67,9 @@
     transform: translateY(85%);
     pointer-events: none;
 }
+
+@media (hover: hover) and (pointer: fine) {
+    .project-card:hover {
+        --project-card-brightness: 1.2;
+    }
+}

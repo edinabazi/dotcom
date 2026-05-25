@@ -23,17 +23,32 @@ export default function ProjectCard({
   projectType,
   delay = 0,
 }: ProjectCardProps) {
-  const arrowX = useSpring(0, { stiffness: 300, damping: 45, mass: 0.7 });
-  const arrowY = useSpring(0, { stiffness: 300, damping: 45, mass: 0.7 });
+  const arrowX = useSpring(0, { stiffness: 350, damping: 23, mass: 0.9 });
+  const arrowY = useSpring(0, { stiffness: 350, damping: 23, mass: 0.9 });
   const arrowOpacity = useSpring(0.7, {
     stiffness: 620,
     damping: 38,
     mass: 0.6,
   });
   const reduceMotion = useReducedMotion();
+  const initialState = reduceMotion
+    ? { opacity: 1 }
+    : {
+        ...fadeInInitial,
+        filter: "blur(4px) brightness(var(--project-card-brightness, 1))",
+      };
+  const animateState = {
+    ...fadeInAnimate,
+    filter: "blur(0px) brightness(var(--project-card-brightness, 1))",
+  };
 
   function animateArrow() {
-    if (reduceMotion) return;
+    if (
+      reduceMotion ||
+      !window.matchMedia("(hover: hover) and (pointer: fine)").matches
+    ) {
+      return;
+    }
 
     arrowX.set(10);
     arrowY.set(-10);
@@ -64,22 +79,16 @@ export default function ProjectCard({
     <motion.a
       href={href}
       target="_blank"
-      rel="noreferrer"
       aria-label={`Visit ${title}`}
       onClick={trackProjectClick}
       onMouseEnter={animateArrow}
-      onFocus={animateArrow}
-      initial={
-        reduceMotion
-          ? { opacity: 1 }
-          : fadeInInitial
-      }
-      animate={fadeInAnimate}
+      initial={initialState}
+      animate={animateState}
       transition={{
         ...fadeInTransition,
         delay,
       }}
-      className="squircle group block rounded-4xl sm:rounded-card border border-border bg-surface hover:brightness-120 p-6 sm:p-8 text-white outline-none ring-white/20 focus-visible:ring-2 transition-all duration-300"
+      className="project-card squircle group block rounded-4xl sm:rounded-card border border-border bg-surface p-6 sm:p-8 text-white outline-none ring-white/20 focus-visible:ring-2 transition-all duration-300"
     >
       <article className="flex flex-col gap-6 sm:gap-8">
         <div className="flex items-start gap-4 sm:items-center">
