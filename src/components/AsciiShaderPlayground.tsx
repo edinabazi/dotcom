@@ -20,6 +20,8 @@ type ShaderSettings = {
 	warp: number;
 	ripple: number;
 	noise: number;
+	imageWave: number;
+	imageWaveFrequency: number;
 	hue: number;
 	saturation: number;
 	trail: number;
@@ -57,6 +59,8 @@ const defaultSettings: ShaderSettings = {
 	warp: 1.1,
 	ripple: 1.35,
 	noise: 0.16,
+	imageWave: 0,
+	imageWaveFrequency: 2.2,
 	hue: 145,
 	saturation: 88,
 	trail: 0.22,
@@ -491,11 +495,16 @@ export default function AsciiShaderPlayground() {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 	const shellRef = useRef<HTMLDivElement | null>(null);
 	const frameRef = useRef<number | null>(null);
+	const imageCanvasRef = useRef<HTMLCanvasElement | null>(null);
+	const imageRef = useRef<HTMLImageElement | null>(null);
+	const glyphImageRef = useRef<HTMLImageElement | null>(null);
 	const settingsRef = useRef(defaultSettings);
 	const [settings, setSettings] = useState(defaultSettings);
 	const [presetName, setPresetName] = useState("Untitled signal");
 	const [savedPresets, setSavedPresets] = useState<SavedPreset[]>([]);
 	const [copied, setCopied] = useState(false);
+	const [imageName, setImageName] = useState("");
+	const [glyphImageName, setGlyphImageName] = useState("");
 
 	settingsRef.current = settings;
 
@@ -528,6 +537,34 @@ export default function AsciiShaderPlayground() {
 			const columns = Math.ceil(rect.width / cell);
 			const rows = Math.ceil(rect.height / cell);
 			const seconds = time * 0.001 * current.speed;
+			const sourceImage = imageRef.current;
+			const glyphImage = glyphImageRef.current;
+			const imageCanvas = imageCanvasRef.current;
+			const imageContext = imageCanvas?.getContext("2d", { willReadFrequently: true });
+			let imagePixels: ImageData | null = null;
+
+			if (sourceImage && imageCanvas && imageContext && columns > 0 && rows > 0) {
+				const imageAspect = sourceImage.naturalWidth / Math.max(sourceImage.naturalHeight, 1);
+				const canvasAspect = columns / Math.max(rows, 1);
+				let drawWidth = columns;
+				let drawHeight = rows;
+				let drawX = 0;
+				let drawY = 0;
+
+				if (imageAspect > canvasAspect) {
+					drawWidth = rows * imageAspect;
+					drawX = (columns - drawWidth) / 2;
+				} else {
+					drawHeight = columns / imageAspect;
+					drawY = (rows - drawHeight) / 2;
+				}
+
+				imageCanvas.width = columns;
+				imageCanvas.height = rows;
+				imageContext.clearRect(0, 0, columns, rows);
+				imageContext.drawImage(sourceImage, drawX, drawY, drawWidth, drawHeight);
+				imagePixels = imageContext.getImageData(0, 0, columns, rows);
+			}
 
 			context.fillStyle = `rgb(26 26 26 / ${1 - current.trail})`;
 			context.fillRect(0, 0, rect.width, rect.height);
@@ -545,33 +582,68 @@ export default function AsciiShaderPlayground() {
 					const px = rotated.x / Math.max(0.1, current.scale);
 					const py = (rotated.y / Math.max(0.1, current.scale)) * current.aspect;
 					const distance = Math.hypot(px, py);
-					const primary = shapeField(current.shape, px, py, seconds, current.repeat, current.edge);
-					const secondary =
-						shapeField(
-							current.secondaryShape,
-							px * 1.35 + Math.sin(seconds) * 0.08,
-							py * 1.35 + Math.cos(seconds * 0.8) * 0.08,
-							seconds,
-							current.repeat + 1,
-							current.edge,
-						) * current.secondaryAmount;
-					const field = blendFields(primary, secondary, current.blend);
-					const wave =
-						field * 2.3 +
-						Math.sin((px * 7 + seconds * 1.8) * current.warp) * 0.35 +
-						Math.cos((py * 9 - seconds * 1.2) * current.ripple) * 0.35 +
-						(hash(x, y, Math.floor(seconds * 24)) - 0.5) * current.noise;
-					const normalized = Math.max(
-						0,
-						Math.min(1, wave * 0.42 * current.contrast + current.brightness),
-					);
+					let normalized = 0;
+
+					if (imagePixels) {
+						const wave = current.imageWave;
+						const frequency = current.imageWaveFrequency;
+						const sampleX = clamp(
+							Math.round(
+								x +
+									Math.sin(y * 0.22 * frequency + seconds * 3.2) * wave +
+									Math.sin((x + y) * 0.08 * frequency - seconds * 2.1) * wave * 0.45,
+							),
+							0,
+							columns - 1,
+						);
+						const sampleY = clamp(
+							Math.round(y + Math.cos(x * 0.18 * frequency + seconds * 2.6) * wave * 0.55),
+							0,
+							rows - 1,
+						);
+						const index = (sampleY * columns + sampleX) * 4;
+						const red = imagePixels.data[index] ?? 0;
+						const green = imagePixels.data[index + 1] ?? 0;
+						const blue = imagePixels.data[index + 2] ?? 0;
+						const alpha = (imagePixels.data[index + 3] ?? 255) / 255;
+						const luminance = (red * 0.2126 + green * 0.7152 + blue * 0.0722) / 255;
+						normalized = clamp((luminance * alpha - 0.5) * current.contrast + 0.5 + current.brightness);
+					} else {
+						const primary = shapeField(current.shape, px, py, seconds, current.repeat, current.edge);
+						const secondary =
+							shapeField(
+								current.secondaryShape,
+								px * 1.35 + Math.sin(seconds) * 0.08,
+								py * 1.35 + Math.cos(seconds * 0.8) * 0.08,
+								seconds,
+								current.repeat + 1,
+								current.edge,
+							) * current.secondaryAmount;
+						const field = blendFields(primary, secondary, current.blend);
+						const wave =
+							field * 2.3 +
+							Math.sin((px * 7 + seconds * 1.8) * current.warp) * 0.35 +
+							Math.cos((py * 9 - seconds * 1.2) * current.ripple) * 0.35 +
+							(hash(x, y, Math.floor(seconds * 24)) - 0.5) * current.noise;
+						normalized = clamp(wave * 0.42 * current.contrast + current.brightness);
+					}
 					const glyphIndex = Math.floor(normalized * (current.glyphs.length - 1));
 					const alpha = 0.28 + normalized * 0.72;
 					const lightness = 48 + normalized * 42;
 					const hue = (current.hue + normalized * 48 + distance * 80) % 360;
 
 					context.fillStyle = `hsl(${hue} ${current.saturation}% ${lightness}% / ${alpha})`;
-					context.fillText(current.glyphs[glyphIndex], x * cell + cell / 2, y * cell + cell / 2);
+					if (glyphImage) {
+						const size = cell * (0.34 + normalized * 0.92);
+						const centerX = x * cell + cell / 2;
+						const centerY = y * cell + cell / 2;
+
+						context.globalAlpha = alpha;
+						context.drawImage(glyphImage, centerX - size / 2, centerY - size / 2, size, size);
+						context.globalAlpha = 1;
+					} else {
+						context.fillText(current.glyphs[glyphIndex], x * cell + cell / 2, y * cell + cell / 2);
+					}
 				}
 			}
 
@@ -595,6 +667,48 @@ export default function AsciiShaderPlayground() {
 		},
 		[],
 	);
+
+	const uploadImage = (file: File | undefined) => {
+		if (!file || !file.type.startsWith("image/")) return;
+
+		const url = URL.createObjectURL(file);
+		const image = new Image();
+
+		image.onload = () => {
+			imageRef.current = image;
+			setImageName(file.name);
+			updateSetting("renderer", "ascii");
+			URL.revokeObjectURL(url);
+		};
+		image.onerror = () => URL.revokeObjectURL(url);
+		image.src = url;
+	};
+
+	const clearImage = () => {
+		imageRef.current = null;
+		setImageName("");
+	};
+
+	const uploadGlyphImage = (file: File | undefined) => {
+		if (!file || !file.type.startsWith("image/")) return;
+
+		const url = URL.createObjectURL(file);
+		const image = new Image();
+
+		image.onload = () => {
+			glyphImageRef.current = image;
+			setGlyphImageName(file.name);
+			updateSetting("renderer", "ascii");
+			URL.revokeObjectURL(url);
+		};
+		image.onerror = () => URL.revokeObjectURL(url);
+		image.src = url;
+	};
+
+	const clearGlyphImage = () => {
+		glyphImageRef.current = null;
+		setGlyphImageName("");
+	};
 
 	const exportValue = useMemo(
 		() => JSON.stringify({ name: presetName, settings }, null, 2),
@@ -629,8 +743,8 @@ export default function AsciiShaderPlayground() {
 	};
 
 	return (
-		<div className="grid h-screen max-h-screen overflow-hidden bg-black p-6 text-white lg:grid-cols-[1fr_22rem] lg:gap-8 lg:p-10">
-			<section className="flex min-h-0 flex-col gap-6">
+		<div className="grid h-dvh max-h-dvh grid-rows-[minmax(0,1fr)] items-stretch overflow-hidden bg-black p-6 text-white lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-8 lg:p-10">
+			<section className="flex h-full min-h-0 flex-col gap-6">
 				<div>
 					<p className="text-base tracking-[-0.04em] text-muted">ASCII shader lab</p>
 					<h1 className="mt-2 max-w-3xl text-5xl leading-none tracking-tighter text-white">
@@ -646,13 +760,14 @@ export default function AsciiShaderPlayground() {
 						ref={canvasRef}
 						className={`absolute inset-0 size-full ${settings.renderer === "ascii" ? "opacity-100" : "opacity-0"}`}
 					/>
+					<canvas ref={imageCanvasRef} className="hidden" />
 					{settings.renderer === "shader" && (
 						<ShaderPreview settings={settings} className="absolute inset-0 size-full" />
 					)}
 				</div>
 			</section>
 
-			<aside className="squircle mt-6 flex min-h-0 flex-col gap-6 overflow-y-auto rounded-card border border-border bg-surface p-6 lg:mt-0">
+			<aside className="squircle mt-6 flex h-full min-h-0 flex-col gap-6 overflow-y-auto rounded-card border border-border bg-surface p-6 lg:mt-0">
 				<div>
 					<h2 className="text-2xl tracking-[-0.04em] text-white">Controls</h2>
 					<p className="mt-2 text-base leading-snug tracking-[-0.04em] text-muted">
@@ -686,6 +801,45 @@ export default function AsciiShaderPlayground() {
 						</button>
 					</div>
 					<Slider label="Cell size" min={7} max={22} step={1} value={settings.cellSize} onChange={(value) => updateSetting("cellSize", value)} />
+					<div className="grid gap-2">
+						<span className="text-sm tracking-[-0.04em] text-muted">Image source</span>
+						<label className="squircle cursor-pointer rounded-avatar border border-border bg-black px-3 py-3 text-center text-sm tracking-[-0.04em] text-white transition-colors hover:bg-white/5">
+							<input
+								type="file"
+								accept="image/*"
+								onChange={(event) => uploadImage(event.target.files?.[0])}
+								className="sr-only"
+							/>
+							{imageName || "Upload image"}
+						</label>
+						{imageName && (
+							<>
+								<Slider
+									label="Image wave"
+									min={0}
+									max={8}
+									step={0.1}
+									value={settings.imageWave}
+									onChange={(value) => updateSetting("imageWave", value)}
+								/>
+								<Slider
+									label="Wave frequency"
+									min={0.5}
+									max={5}
+									step={0.1}
+									value={settings.imageWaveFrequency}
+									onChange={(value) => updateSetting("imageWaveFrequency", value)}
+								/>
+								<button
+									type="button"
+									onClick={clearImage}
+									className="squircle rounded-avatar border border-border px-3 py-3 text-sm tracking-[-0.04em] text-white"
+								>
+									Use generated field
+								</button>
+							</>
+						)}
+					</div>
 					<Slider label="Speed" min={0} max={2.4} step={0.05} value={settings.speed} onChange={(value) => updateSetting("speed", value)} />
 					<Slider label="Contrast" min={0.5} max={2.8} step={0.05} value={settings.contrast} onChange={(value) => updateSetting("contrast", value)} />
 					<Slider label="Brightness" min={-0.35} max={0.35} step={0.01} value={settings.brightness} onChange={(value) => updateSetting("brightness", value)} />
@@ -761,6 +915,28 @@ export default function AsciiShaderPlayground() {
 						))}
 					</select>
 				</label>
+
+				<div className="grid gap-2">
+					<span className="text-sm tracking-[-0.04em] text-muted">Custom glyph image</span>
+					<label className="squircle cursor-pointer rounded-avatar border border-border bg-black px-3 py-3 text-center text-sm tracking-[-0.04em] text-white transition-colors hover:bg-white/5">
+						<input
+							type="file"
+							accept="image/*"
+							onChange={(event) => uploadGlyphImage(event.target.files?.[0])}
+							className="sr-only"
+						/>
+						{glyphImageName || "Upload glyph"}
+					</label>
+					{glyphImageName && (
+						<button
+							type="button"
+							onClick={clearGlyphImage}
+							className="squircle rounded-avatar border border-border px-3 py-3 text-sm tracking-[-0.04em] text-white"
+						>
+							Use text glyphs
+						</button>
+					)}
+				</div>
 
 				<div className="grid gap-3 border-t border-border pt-6">
 					<label className="grid gap-2">

@@ -59,6 +59,11 @@
 }
 
 @layer base {
+    html,
+    body {
+        min-height: 100%;
+    }
+
     body {
         @apply bg-black text-white antialiased font-corner;
     }
