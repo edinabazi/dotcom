@@ -95,6 +95,7 @@ export default function ProjectCard({
           <img
             src={iconSrc}
             alt=""
+            loading="lazy"
             className="squircle size-16 shrink-0 rounded-2xl sm:rounded-avatar"
           />
 
@@ -128,7 +129,12 @@ export default function ProjectCard({
         </div>
 
         <div className="squircle overflow-hidden rounded-3xl sm:rounded-cover">
-          <img src={coverSrc} alt={coverAlt} className="w-full object-cover" />
+          <img
+            src={coverSrc}
+            alt={coverAlt}
+            loading="lazy"
+            className="w-full object-cover"
+          />
         </div>
       </article>
     </motion.a>

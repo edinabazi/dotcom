@@ -18,8 +18,7 @@ const projects = [
     },
     {
         title: "Kompakt",
-        description:
-            "A beautiful, minimal native image & video compression app.",
+        description: "A beautiful, native media compression & conversion app.",
         href: "https://kompaktapp.com/",
         iconSrc: "/assets/kompakt-icon.png",
         coverSrc: "/assets/kompakt-cover.png",
@@ -62,7 +61,7 @@ const workProjects = [
                 </h1>
 
                 <div
-                    class="flex flex-col gap-5 text-lg leading-[1.45] tracking-[-0.04em] text-muted"
+                    class="flex flex-col gap-5 text-lg leading-[1.45] tracking-[-0.04em] text-muted [&_a]:text-white [&_a]:hover:underline"
                 >
                     <p>
                         “Design engineer” is the closest label for what I do,
@@ -87,8 +86,15 @@ const workProjects = [
                         industries than I can count.
                     </p>
                     <p>
-                        I <Highlight client:load delay={2.5}>love</Highlight> this
-                        shit, and I want more.
+                        I've worked on projects for companies like <a
+                            href="https://webflow.com/"
+                            target="_blank">Webflow</a
+                        >, <a href="https://ramp.com/" target="_blank">Ramp</a>, <a
+                            href="https://surgehq.ai/"
+                            target="_blank">Surge</a
+                        >, and <a href="https://abnormal.ai/" target="_blank"
+                            >Abnormal</a
+                        >.
                     </p>
                 </div>
             </FadeIn>
