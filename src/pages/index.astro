@@ -30,7 +30,7 @@ const projects = [
 const workProjects = [
     {
         title: "Raze",
-        description: "A premium design and dev partner for startup founders.",
+        description: "A hyper-specialized full-stack brand and web studio.",
         href: "https://razegrowth.com/",
         iconSrc: "/assets/raze-icon.webp",
         coverSrc: "/assets/raze-cover.webp",
@@ -53,7 +53,7 @@ const workProjects = [
                 <SiteHeader />
             </FadeIn>
 
-            <FadeIn client:load delay={0.08} className="flex flex-col gap-8">
+            <FadeIn client:load delay={0.08} className="flex flex-col gap-6">
                 <h1
                     class="text-4xl sm:text-[42px] leading-none sm:leading-[1.05] tracking-tighter text-white"
                 >
@@ -82,13 +82,98 @@ const workProjects = [
                     <p>
                         Over the past 12 years, I’ve helped build brands,
                         websites, products and growth systems for tech companies
-                        including <a href="https://webflow.com/" target="_blank"
-                            >Webflow</a
-                        >, <a href="https://ramp.com/" target="_blank">Ramp</a>, <a
+                        including <a
+                            href="https://upkeep.com"
+                            target="_blank"
+                            rel="nofollow"
+                            class="whitespace-nowrap"
+                            ><img
+                                src="/assets/favicons/upkeep.png"
+                                alt=""
+                                aria-hidden="true"
+                                class="ml-0.5 mr-1 inline-block size-4 rounded-[2px] align-[-0.125em]"
+                            />UpKeep</a
+                        >, <a
+                            href="https://emotive.io"
+                            target="_blank"
+                            rel="nofollow"
+                            class="whitespace-nowrap"
+                            ><img
+                                src="/assets/favicons/emotive.png"
+                                alt=""
+                                aria-hidden="true"
+                                class="ml-0.5 mr-1 inline-block size-4 rounded-[2px] align-[-0.125em]"
+                            />Emotive</a
+                        >, and <a
+                            href="https://growthx.ai"
+                            target="_blank"
+                            rel="nofollow"
+                            class="whitespace-nowrap"
+                            ><img
+                                src="/assets/favicons/growthx.png"
+                                alt=""
+                                aria-hidden="true"
+                                class="ml-0.5 mr-1 inline-block size-4 rounded-[2px] align-[-0.125em]"
+                            />GrowthX</a
+                        >.
+                    </p>
+                    <p>
+                        I've also worked on projects for companies such as&nbsp;
+                        <a
+                            href="https://webflow.com/"
+                            target="_blank"
+                            rel="nofollow"
+                            class="whitespace-nowrap"
+                            ><img
+                                src="/assets/favicons/webflow.png"
+                                alt=""
+                                aria-hidden="true"
+                                class="ml-0.5 mr-1 inline-block size-4 rounded-[2px] align-[-0.125em]"
+                            />Webflow</a
+                        >, <a
+                            href="https://ramp.com/"
+                            target="_blank"
+                            rel="nofollow"
+                            class="whitespace-nowrap"
+                            ><img
+                                src="/assets/favicons/ramp.png"
+                                alt=""
+                                aria-hidden="true"
+                                class="ml-0.5 mr-1 inline-block size-4 rounded-[2px] align-[-0.125em]"
+                            />Ramp</a
+                        >, <a
                             href="https://surgehq.ai/"
-                            target="_blank">Surge</a
-                        >, and <a href="https://abnormal.ai/" target="_blank"
-                            >Abnormal</a
+                            target="_blank"
+                            rel="nofollow"
+                            class="whitespace-nowrap"
+                            ><img
+                                src="/assets/favicons/surge.png"
+                                alt=""
+                                aria-hidden="true"
+                                class="ml-0.5 mr-1 inline-block size-4 rounded-[2px] align-[-0.125em]"
+                            />Surge</a
+                        >, <a
+                            href="https://abnormal.ai/"
+                            target="_blank"
+                            rel="nofollow"
+                            class="whitespace-nowrap"
+                            ><img
+                                src="/assets/favicons/abnormal.png"
+                                alt=""
+                                aria-hidden="true"
+                                class="ml-0.5 mr-1 inline-block size-4 rounded-[2px] align-[-0.125em]"
+                            />Abnormal</a
+                        >, and <a
+                            href="https://augmentcode.com"
+                            target="_blank"
+                            rel="nofollow"
+                            class="whitespace-nowrap"
+                            ><img
+                                src="/assets/favicons/augment.png"
+                                alt=""
+                                aria-hidden="true"
+                                class="ml-0.5 mr-1 inline-block size-4 rounded-[2px] align-[-0.125em]"
+                            />Augment Code</a
                         >.
                     </p>
                 </div>
@@ -98,7 +183,7 @@ const workProjects = [
                 <FadeIn
                     client:load
                     delay={0.16}
-                    className="flex flex-col gap-8"
+                    className="flex flex-col gap-4"
                 >
                     <h2
                         class="text-4xl sm:text-[42px] leading-none tracking-[-0.04em] text-white"
@@ -134,7 +219,7 @@ const workProjects = [
                 <FadeIn
                     client:load
                     delay={0.28}
-                    className="flex flex-col gap-8"
+                    className="flex flex-col gap-6"
                 >
                     <h2
                         class="text-4xl sm:text-[42px] leading-none tracking-[-0.04em] text-white"
@@ -168,6 +253,30 @@ const workProjects = [
                         ))
                     }
                 </div>
+            </section>
+
+            <section>
+                <FadeIn
+                    client:load
+                    delay={0.48}
+                    className="flex flex-col gap-4"
+                >
+                    <h2
+                        class="text-4xl sm:text-[42px] leading-none tracking-[-0.04em] text-white"
+                    >
+                        Get in touch
+                    </h2>
+                    <p
+                        class="text-lg leading-[1.45] tracking-[-0.04em] text-muted"
+                    >
+                        If you’re working on something ambitious and think I
+                        could help, <a
+                            href="mailto:hello@edinabazi.com"
+                            class="text-white hover:underline"
+                            >send me an email</a
+                        >.
+                    </p>
+                </FadeIn>
             </section>
 
             <footer class="flex justify-center pb-8 sm:hidden">

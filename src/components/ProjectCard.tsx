@@ -88,7 +88,7 @@ export default function ProjectCard({
         ...fadeInTransition,
         delay,
       }}
-      className="project-card squircle group block rounded-4xl sm:rounded-card border border-border bg-surface p-6 sm:p-8 text-white outline-none ring-white/20 focus-visible:ring-2 transition-all duration-300 [@media(prefers-color-scheme:light)_and_(hover:hover)_and_(pointer:fine)]:hover:border-[#b0b0b0]"
+      className="project-card group block rounded-3xl border border-border bg-surface p-6 sm:p-8 text-white outline-none ring-white/20 focus-visible:ring-2 transition-all duration-300 [@media(prefers-color-scheme:light)_and_(hover:hover)_and_(pointer:fine)]:hover:border-[#b0b0b0]"
     >
       <article className="flex flex-col gap-6 sm:gap-8">
         <div className="flex items-start gap-4 sm:items-center">
@@ -96,7 +96,7 @@ export default function ProjectCard({
             src={iconSrc}
             alt=""
             loading="lazy"
-            className="squircle size-16 shrink-0 rounded-2xl sm:rounded-avatar"
+            className="size-16 shrink-0 rounded-xl"
           />
 
           <div className="min-w-0 flex-1">
@@ -135,7 +135,7 @@ export default function ProjectCard({
           </div>
         </div>
 
-        <div className="squircle overflow-hidden rounded-3xl sm:rounded-cover">
+        <div className="overflow-hidden rounded-2xl">
           <img
             src={coverSrc}
             alt={coverAlt}
