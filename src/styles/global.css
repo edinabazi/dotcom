@@ -28,7 +28,7 @@
 }
 
 @theme inline {
-    --font-sans: var(--font-marund), sans-serif;
+    --font-sans: var(--font-suisse-intl), sans-serif;
     --color-black: var(--black);
     --color-white: var(--white);
     --color-muted: var(--muted);
@@ -40,18 +40,8 @@
     --radius-card: 4rem;
 }
 
-@utility font-corner {
-    font-weight: 450;
-    font-variation-settings:
-        "wght" 450,
-        "RND3" 100;
-}
-
 @utility font-thicc {
-    font-weight: 600;
-    font-variation-settings:
-        "wght" 600,
-        "RND3" 100;
+    font-weight: 500;
 }
 
 @utility squircle {
@@ -65,7 +55,17 @@
     }
 
     body {
-        @apply bg-black text-white antialiased font-corner;
+        @apply bg-black text-white antialiased;
+        font-weight: 400;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-weight: 500;
     }
 }
 

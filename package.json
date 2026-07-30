@@ -12,13 +12,13 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^5.0.6",
-    "@astrojs/react": "^5.0.5",
-    "@astrojs/sitemap": "^3.7.2",
+    "@astrojs/mdx": "7.0.5",
+    "@astrojs/react": "6.0.2",
+    "@astrojs/sitemap": "3.7.3",
     "@datafast/ai-crawl": "^1.0.5",
     "@lucide/astro": "^1.16.0",
     "@tailwindcss/vite": "^4.3.0",
-    "astro": "^6.3.6",
+    "astro": "7.1.6",
     "astro-robots-txt": "^1.0.0",
     "clsx": "^2.1.1",
     "motion": "^12.40.0",

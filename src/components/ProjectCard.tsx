@@ -1,4 +1,4 @@
-import { motion, useReducedMotion, useSpring } from "motion/react";
+import { motion, useAnimationControls, useReducedMotion } from "motion/react";
 import { trackEvent } from "../lib/analytics";
 import { fadeInAnimate, fadeInInitial, fadeInTransition } from "./motionConfig";
 
@@ -23,13 +23,7 @@ export default function ProjectCard({
   projectType,
   delay = 0,
 }: ProjectCardProps) {
-  const arrowX = useSpring(0, { stiffness: 350, damping: 23, mass: 0.9 });
-  const arrowY = useSpring(0, { stiffness: 350, damping: 23, mass: 0.9 });
-  const arrowOpacity = useSpring(0.7, {
-    stiffness: 620,
-    damping: 38,
-    mass: 0.6,
-  });
+  const arrowControls = useAnimationControls();
   const reduceMotion = useReducedMotion();
   const initialState = reduceMotion
     ? { opacity: 1 }
@@ -42,7 +36,7 @@ export default function ProjectCard({
     filter: "blur(0px) brightness(var(--project-card-brightness, 1))",
   };
 
-  function animateArrow() {
+  async function animateArrow() {
     if (
       reduceMotion ||
       !window.matchMedia("(hover: hover) and (pointer: fine)").matches
@@ -50,21 +44,27 @@ export default function ProjectCard({
       return;
     }
 
-    arrowX.set(10);
-    arrowY.set(-10);
-    arrowOpacity.set(0);
-
-    window.setTimeout(() => {
-      arrowX.jump(-10);
-      arrowY.jump(10);
-      arrowOpacity.jump(0);
-
-      window.setTimeout(() => {
-        arrowX.set(0);
-        arrowY.set(0);
-        arrowOpacity.set(0.7);
-      }, 24);
-    }, 140);
+    arrowControls.stop();
+    arrowControls.set({ x: 0, y: 0, opacity: 0.7 });
+    await arrowControls.start({
+      x: 9,
+      y: -9,
+      opacity: 0,
+      transition: {
+        duration: 0.18,
+        ease: [0.4, 0, 1, 1],
+      },
+    });
+    arrowControls.set({ x: -9, y: 9, opacity: 0 });
+    await arrowControls.start({
+      x: 0,
+      y: 0,
+      opacity: 0.7,
+      transition: {
+        duration: 0.34,
+        ease: [0.16, 1, 0.3, 1],
+      },
+    });
   }
 
   function trackProjectClick() {
@@ -112,17 +112,24 @@ export default function ProjectCard({
 
               <span
                 aria-hidden="true"
-                className="relative mt-1 grid size-8 shrink-0 place-items-center overflow-hidden rounded-full border border-white/10 text-lg leading-none text-white/70 opacity-70 transition-colors duration-300 [@media(prefers-color-scheme:light)_and_(hover:hover)_and_(pointer:fine)]:group-hover:border-[#b0b0b0]"
+                className="relative mt-1 grid size-8 shrink-0 place-items-center rounded-full border border-white/10 text-white/70 transition-[border-color,color] duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:text-white [@media(prefers-color-scheme:light)_and_(hover:hover)_and_(pointer:fine)]:group-hover:border-[#b0b0b0]"
               >
-                <motion.span
-                  style={{
-                    x: arrowX,
-                    y: arrowY,
-                    opacity: arrowOpacity,
-                  }}
+                <motion.svg
+                  viewBox="0 0 16 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  animate={arrowControls}
+                  initial={{ x: 0, y: 0, opacity: 0.7 }}
+                  className="size-4"
                 >
-                  ↗
-                </motion.span>
+                  <path
+                    d="M4.75 11.25 11.25 4.75M6 4.75h5.25V10"
+                    stroke="currentColor"
+                    strokeWidth="1.25"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </motion.svg>
               </span>
             </div>
           </div>

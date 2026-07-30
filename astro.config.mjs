@@ -18,14 +18,19 @@ export default defineConfig({
   fonts: [
     {
       provider: fontProviders.local(),
-      name: 'Marund',
-      cssVariable: '--font-marund',
+      name: 'Suisse Intl',
+      cssVariable: '--font-suisse-intl',
       fallbacks: ['sans-serif'],
       options: {
         variants: [
           {
-            src: ['./src/fonts/Marund.woff2'],
-            weight: '100 900',
+            src: ['./src/fonts/SuisseIntl-Regular.woff2'],
+            weight: 400,
+            style: 'normal',
+          },
+          {
+            src: ['./src/fonts/SuisseIntl-Medium.woff2'],
+            weight: 500,
             style: 'normal',
           },
         ],

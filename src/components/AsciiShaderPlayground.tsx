@@ -568,7 +568,7 @@ export default function AsciiShaderPlayground() {
 
 			context.fillStyle = `rgb(26 26 26 / ${1 - current.trail})`;
 			context.fillRect(0, 0, rect.width, rect.height);
-			context.font = `${cell * 1.15}px "Marund", ui-monospace, monospace`;
+			context.font = `${cell * 1.15}px "Suisse Intl", ui-monospace, monospace`;
 			context.textAlign = "center";
 			context.textBaseline = "middle";
 
